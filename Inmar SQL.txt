@@ -1,0 +1,26 @@
+1) all the customers whose name begins with "Joe"
+
+select * from dbo.Customer where Name like 'Joe%';
+
+2) all the product names ordered by customer "Joe" after '11/1/2016'
+
+select Name from Order o inner join Customer c on o.CustomerId = c.CustomerId inner join OrderProduct op on o.ordered = op.OrderId inner join Product p on op.ProductId = p.ProductId
+where convert(date,o.CreatedAt)>''11/1/2016'' and c.Name='Joe' order by c.Name;
+
+3) the total amount spend by customer "Joe"
+
+select sum(p.Price) as [Total Amount] from Order o inner join Customer c on o.CustomerId = c.CustomerId inner join OrderProduct op on o.ordered = op.OrderId inner join Product p on op.ProductId = p.ProductId
+where convert(date,o.CreatedAt)>''11/1/2016'' and c.Name='Joe' group by p.ProductId order by c.Name;
+
+4) ● all the customer names and count of their orders for orders containing more than one
+product
+
+select C.Name,Count(*) as ORdersCount as [Total Amount] from Order o inner join Customer c on o.CustomerId = c.CustomerId inner join OrderProduct op on o.ordered = op.OrderId inner join Product p on op.ProductId = p.ProductId
+where convert(date,o.CreatedAt)>''11/1/2016'' and c.Name='Joe' group by p.ProductId having count(ProductId)>1 order by c.Name;
+
+
+
+
+
+
+
